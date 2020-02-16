@@ -8,29 +8,29 @@ struct student
 	struct student* next;
 };
 
-void addStudent(struct student* pNode)
+void addStudent(struct student* pNode) //인자 == 생성될 노드의 바로 전에 있는 노드
 {
-	struct student* newNode = malloc(sizeof(struct student));
 	char name[10];
+	struct student* newNode = malloc(sizeof(struct student));	//새로운 노드 생성
 
 	printf("이름: ");
 	scanf("%s", name);
 
 	
 	strcpy(newNode->name, name);
-	newNode->next = pNode->next;
-	pNode->next = newNode;
+	newNode->next = pNode->next;	//새로운 노드는 현재 끝 노드의 다음 노드를 가리킴
+	pNode->next = newNode;			//현재 노드의 다음은 새로운 노드를 가리킴
 }
 
 int main(void)
 {
 	int menu = 0;
 	int count = 0;
-	struct student *head = malloc(sizeof(struct student));
-	struct student* cur;
+	struct student *head = malloc(sizeof(struct student)); //head node 생성
+	struct student* cur;	//리스트를 순회하는 포인터 생성
 	
-	head->next = NULL;
-	cur = head;
+	head->next = NULL;	//head node의 포인터를 NULL로 초기화
+	cur = head;			//cur 포인터는 맨 처음 head를 가리킴
 
 	while (menu < 6)
 	{
@@ -44,16 +44,16 @@ int main(void)
 		switch (menu)
 		{
 			case 1:
-				addStudent(cur);
-				cur = cur->next;
+				addStudent(cur);	//현재 리스트의 가장 끝 노드 위치를 인자로,,
+				cur = cur->next;	//노드 생성 및 리스트에 추가 후 cur은 리스트의 가장 끝으로 이동
 				break;
 			case 4:
-				cur = head->next;
-				while (cur != NULL)
+				cur = head->next;	//cur은 head 다음을 가리킴
+				while (cur != NULL)	//cur이 NULL이 아니면
 				{
-					printf("이름: %s\n", cur->name);
+					printf("이름: %s\n", cur->name); //cur이 가리키고 있는 노드의 데이터 출력
 
-					cur = cur->next;
+					cur = cur->next;	//cur은 다음 노드를 가리킴
 				}
 				break;
 			case 5:
