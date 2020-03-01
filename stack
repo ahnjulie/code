@@ -1,0 +1,124 @@
+#define _CRT_SECURE_NO_WARNINGS  
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node
+{
+	int seq;
+	int int_data;
+	char char_data;
+	char string_data[10];
+	struct node* left_next;
+	struct node* right_next;
+};
+
+int seq = 0;
+
+void insert_node(struct node *front, struct node *rear)
+{
+	int int_data;
+	char char_data;
+	char string_data[10] = { 0, };
+	struct node* new_node = malloc(sizeof(struct node));
+
+	printf("int: ");
+	scanf("%d", &int_data);
+	printf("char: ");
+	scanf(" %c", &char_data);
+	printf("str: ");
+	scanf(" %s", &string_data);
+
+	memset(new_node, 0, sizeof(new_node));
+	new_node->left_next = new_node->right_next = NULL;
+	new_node->seq = ++seq;
+	new_node->int_data = int_data;
+	new_node->char_data = char_data;
+	strcpy(new_node->string_data, string_data);
+
+	if (front->right_next == NULL)
+	{
+		front->right_next = new_node;
+		rear->left_next = new_node;
+	}
+	else
+	{
+		(rear->left_next)->right_next = new_node;
+		new_node->left_next = rear->left_next;
+		rear->left_next = new_node;
+	}
+
+	return;
+}
+
+void delete_node(struct node* front, struct node* rear)
+{
+	struct node* pos = rear->left_next;
+
+	if (pos == NULL)
+	{
+		printf("Nothing!\n");
+	}
+	else if (pos->left_next == NULL) //삭제할 노드가 하나 뿐일 때
+	{
+		front->right_next = NULL;
+		rear->left_next = NULL;
+		free(pos);
+	}
+	else
+	{
+		rear->left_next = pos->left_next;
+		(pos->left_next)->right_next = NULL;
+	}
+}
+
+void print_list(struct node* front)
+{
+	struct node* pos = front->right_next;
+
+	while (pos != NULL)
+	{
+		printf("seq: %d\n", pos->seq);
+		printf("int: %d\n", pos->int_data);
+		printf("char: %c\n", pos->char_data);
+		printf("str: %s\n", pos->string_data);
+		pos = pos->right_next;
+	}
+}
+
+
+
+int main(void)
+{
+	int menu = 0;
+
+	struct node* front = malloc(sizeof(struct node));
+	struct node* rear = malloc(sizeof(struct node));
+
+	memset(front, 0, sizeof(front));
+	memset(rear, 0, sizeof(rear));
+	front->left_next = front->right_next = NULL;
+	rear->left_next = front->right_next = NULL;
+
+	while (1)
+	{
+		printf("insert menu: ");
+		scanf("%d", &menu);
+		if (menu == 1)
+		{
+			insert_node(front, rear);
+		}
+		else if (menu == 2)
+		{
+			delete_node(front, rear);
+		}
+		else if (menu == 3)
+		{
+			print_list(front);
+		}
+		else
+		{
+			break;
+		}
+		printf("\n");
+	}
+}
