@@ -28,13 +28,8 @@ void insert_node(struct node* front, struct node* rear)
 
 	printf("char: ");
 	scanf(" %c", &char_data);	//char_data = getchar();
-	//fflush(stdin);
 	printf("str: ");
 	scanf(" %s", &string_data); //gets(string_data);
-
-	//printf("int %d\n", int_data);
-	//printf("char %c\n", char_data);
-	//printf("str %s\n", string_data);
 
 	memset(new_node, 0, sizeof(new_node));
 	new_node->left_next = NULL;
