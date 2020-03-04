@@ -1,0 +1,93 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct node
+{
+	int seq;
+	int int_data;
+	char char_data;
+	char string_data[10];
+	struct node* next;
+};
+
+int seq = 0;
+struct node *head = NULL;
+
+void insert_node()
+{
+	struct node* new_node = malloc(sizeof(struct node));
+	struct node* pos;
+
+	int int_data;
+	char char_data;
+	char string_data[10] = { 0, };
+
+	printf("int: ");
+	scanf("%d", &int_data);
+
+	printf("char: ");
+	scanf(" %c", &char_data);	//char_data = getchar();
+	printf("str: ");
+	scanf(" %s", &string_data); //gets(string_data);
+
+	memset(new_node, 0, sizeof(new_node));
+	new_node->next = NULL;
+	new_node->seq = ++seq;
+	new_node->int_data = int_data;
+	new_node->char_data = char_data;
+	strcpy(new_node->string_data, string_data);
+	
+	if(head == NULL)
+	{
+		head = new_node;
+	}
+	else
+	{
+		pos = head;
+		while(pos -> next != NULL)
+		{
+			pos = pos -> next;
+		}
+		pos -> next = new_node;
+	}
+}
+
+void print_list()
+{
+	struct node* pos = head;
+
+	printf("\n****PRINT****\n");
+	while (pos != NULL)
+	{
+		printf("seq: %d \n", (*pos).seq);
+		printf("int: %d \n", pos->int_data);
+		printf("char: %d\n", pos->char_data);
+		printf("str: %d\n\n", pos->string_data);
+		pos = pos->next;
+	}
+}
+
+int main()
+{
+	int menu = 0;
+	while (1)
+	{
+		printf("insert menu: ");
+		scanf("%d", &menu);
+	
+		if (menu == 1)
+		{
+			insert_node();
+		}
+		else if (menu == 3)
+		{
+			print_list();
+		}
+		else
+		{
+			break;
+		}
+	}
+}
+	
